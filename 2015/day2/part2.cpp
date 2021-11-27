@@ -56,4 +56,5 @@ int main() {
     if (t.fail()) { std::cout << "ERROR: " << strerror(errno); }
 
     std::cout << solve(t) << '\n';
+    t.close();
 }
