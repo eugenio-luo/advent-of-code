@@ -27,7 +27,8 @@ int main() {
     } else {
         std::stringstream buffer;
         buffer << t.rdbuf();
-
+        t.close();
+        
         std::cout << solve(buffer.str()) << '\n';     
     }
 }
