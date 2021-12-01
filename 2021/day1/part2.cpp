@@ -14,10 +14,7 @@ int solve(std::stringstream& input) {
 
     int increase{};
     for (int i{3}; i < measurements.size(); ++i) {
-        if (measurements[i] + measurements[i-1] + measurements[i-2] >
-            measurements[i-1] + measurements[i-2] + measurements[i-3]) {
-            ++increase;
-        }
+        if (measurements[i] > measurements[i-3]) { ++increase; }
     }
     
     return increase;
