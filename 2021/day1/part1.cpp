@@ -13,7 +13,7 @@ int solve(std::stringstream& input) {
     }
 
     int increase{};
-    for (int i{1}; i < measurements.size(); ++i) {
+    for (uint i{1}; i < measurements.size(); ++i) {
         if (measurements[i] > measurements[i-1]) { ++increase; }
     }
     
