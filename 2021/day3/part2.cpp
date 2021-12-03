@@ -2,7 +2,6 @@
 #include <sstream>
 #include <fstream>
 #include <cstring>
-#include <cmath>
 
 std::string find(const std::string& input, bool inverse = false) {
     uint length = input.find('\n');
@@ -27,7 +26,7 @@ std::string find(const std::string& input, bool inverse = false) {
             auto line = compareList.substr(k, length);
             bool same {true};
             
-            for (uint m{}; m < i + 1; ++m) {
+            for (uint m{}; m <= i; ++m) {
                 if (line[m] != bits[m]) same = false;
             }
             

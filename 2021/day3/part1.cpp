@@ -2,7 +2,6 @@
 #include <sstream>
 #include <fstream>
 #include <cstring>
-#include <cmath>
 
 int solve(std::stringstream& input) {
     std::string line{};
