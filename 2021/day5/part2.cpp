@@ -9,11 +9,10 @@ struct Command {
     int start;
     int jump;
     int end;
-    bool diagonal;
     int jumpY;
 
-    Command(int s, int j, int e, bool d = false, int jy = 0)
-        : start{s}, jump{j}, end{e}, diagonal{d}, jumpY{jy} {}
+    Command(int s, int j, int e, int jy = 0)
+        : start{s}, jump{j}, end{e}, jumpY{jy} {}
 };
 
 void parse(std::stack<Command>& lines, std::stringstream& input, int sideLength) {
@@ -42,43 +41,13 @@ void parse(std::stack<Command>& lines, std::stringstream& input, int sideLength)
             int directionX = (startX < endX) ? 1 : -1;
             int directionY = (startY < endY) ? 1 : -1;
             int jumpY = sideLength * directionY;
-            lines.push(Command(start, directionX, end, true, jumpY));
+            lines.push(Command(start, directionX, end, jumpY));
         }
     }
 }
 
 bool condition(int start, int end, int i) {
     return (start < end) ? i <= end : i >= end;
-}
-
-int diagonalLoop(const Command& com, std::vector<short>& positions) {
-    int overlaps{};
-    
-    for (int i{com.start}; condition(com.start, com.end, i); i+= (com.jump + com.jumpY)) {
-        if (positions[i] == 0) {
-            ++positions[i];
-        } else if (positions[i] == 1) {
-            ++overlaps;
-            ++positions[i];
-        }
-    }
-
-    return overlaps;
-}
-
-int loop(const Command& com, std::vector<short>& positions) {
-    int overlaps{};
-
-    for (int i{com.start}; condition(com.start, com.end, i); i+=com.jump) {
-        if (positions[i] == 0) {
-            ++positions[i];
-        } else if (positions[i] == 1) {
-            ++overlaps;
-            ++positions[i];
-        } 
-    }
-
-    return overlaps;
 }
 
 int solve(std::stringstream& input, int sideLength) {
@@ -91,12 +60,15 @@ int solve(std::stringstream& input, int sideLength) {
     while (!lines.empty()) {
         auto com = lines.top();
         
-        if (com.diagonal) {
-            overlaps += diagonalLoop(com, positions);
-        } else {
-            overlaps += loop(com, positions);
+        for (int i{com.start}; condition(com.start, com.end, i); i+=com.jump + com.jumpY) {
+            if (positions[i] == 0) {
+                ++positions[i];
+            } else if (positions[i] == 1) {
+                ++overlaps;
+                ++positions[i];
+            } 
         }
-       
+
         lines.pop();
     }
    
