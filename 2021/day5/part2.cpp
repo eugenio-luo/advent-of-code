@@ -9,10 +9,9 @@ struct Command {
     int start;
     int jump;
     int end;
-    int jumpY;
 
-    Command(int s, int j, int e, int jy = 0)
-        : start{s}, jump{j}, end{e}, jumpY{jy} {}
+    Command(int s, int j, int e)
+        : start{s}, jump{j}, end{e} {}
 };
 
 void parse(std::stack<Command>& lines, std::stringstream& input, int sideLength) {
@@ -40,8 +39,8 @@ void parse(std::stack<Command>& lines, std::stringstream& input, int sideLength)
         } else {
             int directionX = (startX < endX) ? 1 : -1;
             int directionY = (startY < endY) ? 1 : -1;
-            int jumpY = sideLength * directionY;
-            lines.push(Command(start, directionX, end, jumpY));
+            int jump = directionX + sideLength * directionY;
+            lines.push(Command(start, jump, end));
         }
     }
 }
@@ -60,7 +59,7 @@ int solve(std::stringstream& input, int sideLength) {
     while (!lines.empty()) {
         auto com = lines.top();
         
-        for (int i{com.start}; condition(com.start, com.end, i); i+=com.jump + com.jumpY) {
+        for (int i{com.start}; condition(com.start, com.end, i); i+= com.jump) {
             if (positions[i] == 0) {
                 ++positions[i];
             } else if (positions[i] == 1) {
