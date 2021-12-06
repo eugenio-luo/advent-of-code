@@ -11,7 +11,7 @@ struct Tile {
     Tile(int n) : number{ n }, marked{ false } {} 
 };
 
-void boardsParser(std::stringstream& input, std::vector<Tile>& tiles) {
+void boardsParser(std::istream& input, std::vector<Tile>& tiles) {
     std::string line;
     
     while (std::getline(input, line)) {
@@ -75,7 +75,7 @@ int winCondition(const std::vector<Tile>& tiles) {
     return -1;
 }
 
-int solve(std::stringstream& input) {
+int solve(std::istream& input) {
     std::string line;
     
     std::getline(input, line);
@@ -113,8 +113,5 @@ int main() {
     std::ifstream input("input");
     if (input.fail()) std::cout << strerror(errno);
 
-    std::stringstream buffer;
-    buffer << input.rdbuf();
-
-    std::cout << solve(buffer) << '\n';
+    std::cout << solve(input) << '\n';
 }

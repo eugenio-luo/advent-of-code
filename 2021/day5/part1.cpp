@@ -14,7 +14,7 @@ struct Command {
         : start{s}, jump{j}, end{e} {}
 };
 
-void parse(std::stack<Command>& lines, std::stringstream& input, int sideLength) {
+void parse(std::stack<Command>& lines, std::istream& input, int sideLength) {
     std::string string;
     while (std::getline(input, string)) {
         auto comma = string.find(',');
@@ -44,7 +44,7 @@ bool condition(int start, int end, int i) {
     return (start < end) ? i <= end : i >= end;
 }
 
-int solve(std::stringstream& input, int sideLength) {
+int solve(std::istream& input, int sideLength) {
     std::stack<Command> lines;
     parse(lines, input, sideLength);
 
@@ -74,9 +74,6 @@ int main(int argc, char* argv[]) {
         std::ifstream input(argv[1]);
         if (input.fail()) std::cout << "[ERROR] " << strerror(errno);
 
-        std::stringstream buffer;
-        buffer << input.rdbuf();
-
-        std::cout << solve(buffer, std::strtol(argv[2], nullptr, 10)) << '\n';
+        std::cout << solve(input, std::stoi(argv[2])) << '\n';
     }
 }

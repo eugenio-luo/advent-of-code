@@ -5,10 +5,11 @@
 #include <string>
 #include <vector>
 
-int solve(std::stringstream& input) {
+int solve(std::istream& input) {
     std::vector<int> measurements; 
-    
-    for (std::string line; std::getline(input, line);) {
+
+    std::string line;
+    while (std::getline(input, line)) {
         measurements.push_back(std::stoi(line));
     }
 
@@ -24,8 +25,5 @@ int main() {
     std::fstream input("input");
     if (input.fail()) { std::cout << "[ERROR] " << strerror(errno) << '\n'; }
 
-    std::stringstream buffer;
-    buffer << input.rdbuf();
-
-    std::cout << solve(buffer) << '\n';
+    std::cout << solve(input) << '\n';
 }

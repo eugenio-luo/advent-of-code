@@ -1,6 +1,6 @@
 #include <iostream>
-#include <sstream>
 #include <fstream>
+#include <sstream>
 #include <cstring>
 #include <vector>
 #include <algorithm>
@@ -14,7 +14,7 @@ struct Line {
     Line(int sx, int sy, int ex, int ey) : sx{sx}, sy{sy}, ex{ex}, ey{ey} {}
 };
 
-void parse(std::vector<Line>& lines, std::stringstream& input) {
+void parse(std::vector<Line>& lines, std::istream& input) {
     std::string string;
     while (std::getline(input, string)) {
         auto comma = string.find(',');
@@ -75,7 +75,7 @@ int loop(int start, int end, int fixed, bool isVertical, std::vector<Pos>& posts
     return overlaps;
 }
 
-int solve(std::stringstream& input) {
+int solve(std::istream& input) {
     std::vector<Line> lines;
     parse(lines, input);
 
@@ -112,9 +112,6 @@ int main(int argc, char* argv[]) {
         std::ifstream input(argv[1]);
         if (input.fail()) std::cout << "[ERROR] " << strerror(errno);
 
-        std::stringstream buffer;
-        buffer << input.rdbuf();
-
-        std::cout << solve(buffer) << '\n';
+        std::cout << solve(input) << '\n';
     }
 }

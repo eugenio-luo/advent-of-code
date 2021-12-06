@@ -14,7 +14,7 @@ struct Line {
     Line(int s, int e, int p, bool i) : start{s}, end{e}, pos{p}, isVertical{i} {}
 };
 
-void parse(std::vector<Line>& lines, std::stringstream& input) {
+void parse(std::vector<Line>& lines, std::istream& input) {
     std::string string;
     while (std::getline(input, string)) {
         auto comma = string.find(',');
@@ -51,7 +51,7 @@ bool condition(int i, int start, int end) {
     return (start < end) ? i <= end : i >= end;
 }
 
-int solve(std::stringstream& input) {
+int solve(std::istream& input) {
     std::vector<Line> lines;
     parse(lines, input);
 
@@ -90,9 +90,6 @@ int main(int argc, char* argv[]) {
         std::ifstream input(argv[1]);
         if (input.fail()) std::cout << "[ERROR] " << strerror(errno);
 
-        std::stringstream buffer;
-        buffer << input.rdbuf();
-
-        std::cout << solve(buffer) << '\n';
+        std::cout << solve(input) << '\n';
     }
 }

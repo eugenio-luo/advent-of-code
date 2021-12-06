@@ -3,7 +3,7 @@
 #include <fstream>
 #include <cstring>
 
-int solve(std::stringstream& input) {
+int solve(std::istream& input) {
     std::string instruction{};
     int depth{}, position{};
     
@@ -27,8 +27,5 @@ int main() {
     std::ifstream input("input");
     if (input.fail()) std::cout << "[ERROR] " << strerror(errno);
 
-    std::stringstream buffer;
-    buffer << input.rdbuf();
-
-    std::cout << solve(buffer) << '\n';
+    std::cout << solve(input) << '\n';
 }
