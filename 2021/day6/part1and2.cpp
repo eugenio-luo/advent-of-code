@@ -3,6 +3,7 @@
 #include <sstream>
 #include <cstring>
 #include <array>
+#include <algorithm>
 
 long long solve(std::ifstream& input, int totalDays) {
     std::array<long long, 9> fishes{};
@@ -15,20 +16,8 @@ long long solve(std::ifstream& input, int totalDays) {
     }
 
     for (int day{}; day < totalDays; ++day) {
-        
-        long long tmp{fishes[0]};
-        for (int i{fishes.size() - 1}; i >= 0; --i) {
-
-            long long value = tmp;
-
-            if (i == 0) {
-                fishes[reprDay] += fishes[i];
-                fishes[i] = value;
-            } else {
-                tmp = fishes[i];
-                fishes[i] = value;       
-            }
-        }
+        std::rotate(fishes.begin(), fishes.begin() + 1, fishes.end());
+        fishes[reprDay] += fishes[fishes.size() - 1];
     }
 
     long long totalFishes{};
