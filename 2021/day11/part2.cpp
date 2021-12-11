@@ -57,7 +57,7 @@ bool turn(std::vector<Lvl>& levels, int size) {
     return zeroes == levels.size();
 }
 
-int solve(std::istream& input, int steps) {
+int solve(std::istream& input) {
     std::vector<Lvl> levels;
     std::string line;
     int size;
@@ -73,7 +73,7 @@ int solve(std::istream& input, int steps) {
         }
     }
 
-    for (int step{}; step < steps; ++step) {
+    for (int step{};; ++step) {
         if (turn(levels, size)) return step + 1;
     }
 
@@ -81,12 +81,12 @@ int solve(std::istream& input, int steps) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
+    if (argc != 2) {
         std::cerr << "[ERROR] missing argument [input] [steps]\n";
     } else {
         std::ifstream input(argv[1]);
         if (input.fail()) std::cerr << "[ERROR] " << strerror(errno) << '\n';
 
-        std::cout << solve(input, std::stoi(argv[2])) << '\n';
+        std::cout << solve(input) << '\n';
     }
 }

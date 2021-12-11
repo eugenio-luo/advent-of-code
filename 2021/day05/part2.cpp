@@ -75,12 +75,13 @@ int solve(std::istream& input, int sideLength) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        std::cout << "[ERROR] missing argument, should be [input] [sideLength]\n";
+    if (argc < 2) {
+        std::cout << "[ERROR] missing argument, should be [input] optional=[sideLength]\n";
     } else {
         std::ifstream input(argv[1]);
         if (input.fail()) std::cout << "[ERROR] " << strerror(errno);
 
-        std::cout << solve(input, std::stoi(argv[2])) << '\n';
+        int sideLength = (argc < 3) ? 1000 : std::stoi(argv[2]);
+        std::cout << solve(input, sideLength) << '\n';
     }
 }

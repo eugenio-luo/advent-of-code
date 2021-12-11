@@ -81,12 +81,13 @@ int solve(std::istream& input, int steps) {
 }
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        std::cerr << "[ERROR] missing argument [input] [steps]\n";
+    if (argc < 2) {
+        std::cerr << "[ERROR] missing argument [input] optional=[steps]\n";
     } else {
         std::ifstream input(argv[1]);
         if (input.fail()) std::cerr << "[ERROR] " << strerror(errno) << '\n';
 
-        std::cout << solve(input, std::stoi(argv[2])) << '\n';
+        int steps = (argc < 3) ? 100 : std::stoi(argv[2]);
+        std::cout << solve(input, steps) << '\n';
     }
 }
