@@ -109,8 +109,8 @@ int solve(std::istream& input) {
     return -1;
 }
 
-int main() {
-    std::ifstream input("input");
+int main(int argc, char* argv[]) {
+    std::ifstream input(argv[1]);
     if (input.fail()) std::cout << strerror(errno);
 
     std::cout << solve(input) << '\n';

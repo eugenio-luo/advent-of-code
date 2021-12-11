@@ -21,8 +21,8 @@ int solve(std::istream& input) {
     return increase;
 }
 
-int main() {
-    std::fstream input("input");
+int main(int argc, char* argv[]) {
+    std::fstream input(argv[1]);
     if (input.fail()) { std::cout << "[ERROR] " << strerror(errno) << '\n'; }
 
     std::cout << solve(input) << '\n';

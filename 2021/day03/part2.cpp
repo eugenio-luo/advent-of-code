@@ -52,8 +52,8 @@ int solve(std::stringstream& input) {
     return std::stoi(oxygen, nullptr, 2) * std::stoi(co2, nullptr, 2);
 }
 
-int main() {
-    std::ifstream input("input");
+int main(int argc, char* argv[]) {
+    std::ifstream input(argv[1]);
     if (input.fail()) std::cout << "[ERROR] " << strerror(errno);
 
     std::stringstream buffer;
