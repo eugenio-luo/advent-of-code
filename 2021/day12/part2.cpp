@@ -19,23 +19,21 @@ bool allUppers(std::string& s) {
     return std::all_of(std::begin(s), std::end(s), [](unsigned char c){ return std::isupper(c); });
 }
 
-int path(CaveMap& caves, const std::string& name, bool twice = false) {
-    auto& actualCave = caves[name];
+int path(CaveMap& caves, Cave& cave, bool twice = false) {
     int paths{};
-    ++actualCave.visited;
+    ++cave.visited;
 
-    for (auto& node : actualCave.nodes) {
-
+    for (auto& node : cave.nodes) {
         if (node->name == "end") {
             ++paths;
         } else if (node->big || node->visited < 1) {
-            paths += path(caves, node->name, twice);
+            paths += path(caves, *node, twice);
         } else if (!twice && node->visited < 2) {
-            paths += path(caves, node->name, true);
+            paths += path(caves, *node, true);
         }
     }
     
-    --actualCave.visited;
+    --cave.visited;
     return paths;
 }
 
@@ -59,7 +57,7 @@ int solve(std::istream& input) {
         if (firstName != "start") secondCave.nodes.push_back(&firstCave);
     }
     
-    return path(caves, "start");
+    return path(caves, caves["start"]);
 }
 
 int main(int argc, char* argv[]) {
