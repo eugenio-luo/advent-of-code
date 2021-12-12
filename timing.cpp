@@ -10,8 +10,9 @@ int main(int argc, char* argv[]) {
     } else {
         std::vector<long double> timings;
 
+        std::system("rm results");
         double progress{};
-        double progressStep = (1.0 / (std::stod(argv[2]) - 1)) + 0.001;
+        double progressStep = (1.0 / (std::stod(argv[2]) - 1)) + (0.01 / std::stod(argv[2]));
         int barWidth = 70;
         std::cout << "\nCOMPILING AND EXECUTING\n";
         for (int i{1}; i <= std::stoi(argv[2]); ++i) {
@@ -19,11 +20,11 @@ int main(int argc, char* argv[]) {
                 std::stringstream com;
                 com << "g++ " << argv[1] << "/day";
                 if (i < 10) com << "0";
-                com << i << "/part" << j << ".cpp -o a.out";
+                com << i << "/part" << j << ".cpp -o ccc.out";
                 std::system(com.str().c_str());
 
                 com.str("");
-                com << "./a.out " << argv[1] << "/day";
+                com << "./ccc.out " << argv[1] << "/day";
                 if (i < 10) com << "0";
                 com << i << "/input >> results";
                 auto start = std::chrono::high_resolution_clock::now();
@@ -53,16 +54,16 @@ int main(int argc, char* argv[]) {
         int day{1};
         int part{1};
         long double total{};
-        std::cout << "year\tday\tpart\ts\n";
-        for (auto ms : timings) {
-            std::cout << argv[1] << '\t' << day << '\t' << part << "\t\033[1;32m" << ms << "\n\033[0m";
+        std::cout << "year\tday\tpart\tseconds\n";
+        for (auto s : timings) {
+            std::cout << argv[1] << '\t' << day << '\t' << part << "\t\033[1;32m" << s << "\n\033[0m";
             ++part;
             if (part == 3) {
                 ++day;
                 part = 1;
             }
 
-            total+= ms;
+            total+= s;
         }
         std::cout << "\n\033[1;31mTOTAL:\t\t\t" << total << "\n\n";
     }
