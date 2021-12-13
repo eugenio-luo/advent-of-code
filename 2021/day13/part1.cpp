@@ -61,13 +61,13 @@ int solve(std::istream& input) {
 
         folds.push_back(Fold(isY, num));
         
-        if (size.x == 0 || size.y == 0) {
-            if (line[charIndex] == 'x') {
-                size.x = std::stoi(line.substr(charIndex+2)) * 2 + 1;
-            } else {
-                size.y = std::stoi(line.substr(charIndex+2)) * 2 + 1;
-            }
+        if (line[charIndex] == 'x') {
+            size.x = std::stoi(line.substr(charIndex+2)) * 2 + 1;
+        } else {
+            size.y = std::stoi(line.substr(charIndex+2)) * 2 + 1;
         }
+
+        if (size.x != 0 && size.y != 0) break;
     }
 
     Pos visualSize = size;
@@ -86,22 +86,18 @@ int solve(std::istream& input) {
         paper[y * size.x + x] = true;
     }
 
-    std::vector<int> counts{};
     
-    for (auto& fold : folds) {
-        if (fold.isY) {
-            folding(paper, size, visualSize, fold.num, true);
-        } else {
-            folding(paper, size, visualSize, fold.num, false);
-        }
+    if (folds[0].isY) {
+        folding(paper, size, visualSize, folds[0].num, true);
+    } else {
+        folding(paper, size, visualSize, folds[0].num, false);
+    }
         
-        int count{};
-        for (int y{}; y < visualSize.y; ++y) {
-            for (int x{}; x < visualSize.x; ++x) {
-                count += paper[y * size.x + x];
-            }
+    int count{};
+    for (int y{}; y < visualSize.y; ++y) {
+        for (int x{}; x < visualSize.x; ++x) {
+            count += paper[y * size.x + x];
         }
-        counts.push_back(count);
     }
     
     /*
@@ -113,7 +109,7 @@ int solve(std::istream& input) {
     }
     */
 
-    return counts[0];
+    return count;
 }
 
 int main(int argc, char* argv[]) {
