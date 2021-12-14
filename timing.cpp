@@ -3,10 +3,13 @@
 #include <sstream>
 #include <chrono>
 #include <vector>
+#include <string>
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        std::cerr << "\033[31;1m[ERROR]\033[0m missing argument [year] [num]\n";
+    if (argc < 3 && std::string(argv[1]).compare("--help")) {
+        std::cerr << std::string() +
+                     "[USAGE] year days [options]\n" +
+                     "Options:\n\t-c: compiler options\n";
     } else {
         std::vector<long double> timings;
 
@@ -18,9 +21,18 @@ int main(int argc, char* argv[]) {
         for (int i{1}; i <= std::stoi(argv[2]); ++i) {
             for (int j{1}; j <= 2; ++j) {
                 std::stringstream com;
+
                 com << "g++ " << argv[1] << "/day";
                 if (i < 10) com << "0";
-                com << i << "/part" << j << ".cpp -o ccc.out";
+                com << i << "/part" << j << ".cpp -o ccc.out ";
+
+                if (argc > 4) {
+                    std::string options = argv[3];
+                    if (!options.compare("-c")) {
+                        com << argv[4];
+                    }
+                }
+                
                 std::system(com.str().c_str());
 
                 com.str("");
@@ -31,7 +43,8 @@ int main(int argc, char* argv[]) {
                 std::system(com.str().c_str());
                 auto elapsed = std::chrono::high_resolution_clock::now() - start;
 
-                long double microseconds = std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
+                long double microseconds =
+                    std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count();
                 timings.push_back(microseconds / 1000000.0);
             }
             
