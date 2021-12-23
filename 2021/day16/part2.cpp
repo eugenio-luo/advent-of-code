@@ -52,7 +52,6 @@ public:
     int typeID_;
 
     virtual ~Packet() = default;
-    virtual void print() = 0;
     
 protected:
     Packet(int v, int t) : version_{v}, typeID_{t} {}
@@ -63,27 +62,7 @@ public:
     long long value_;
 
     Literal(int v, int t, long long val) : Packet(v, t), value_{val} {}
-
-    void print() {
-        std::cout << version_ << ' ' << typeID_ << ' ' << value_;
-    }
 };
-
-/*
-class Operator : public Packet {
-public:
-    int lengthTypeID_ = 0;
-    int lengthField_ = 0;
-    
-    Operator(int v, int t) : Packet(v, t) {}
-    Operator(int v, int t, int lt, int lf)
-        : Packet(v, t), lengthTypeID_{lt}, lengthField_{lf} {}
-
-    void print() {
-        std::cout << version_ << ' ' << typeID_ << ' ' << lengthTypeID_ << ' ' << lengthField_;
-    }
-};
-*/
 
 class Operator : public Packet {
 public:
@@ -94,14 +73,6 @@ public:
     ~Operator() {
         for (auto& op : operands_) {
             delete op;
-        }
-    }
-    
-    void print() {
-        std::cout << version_ << ' ' << typeID_ << '\n';
-        for (auto& op : operands_) {
-            op->print();
-            std::cout << '\n';
         }
     }
 };
@@ -119,14 +90,6 @@ long long getBits(std::queue<bool>& source, int length) {
     }
     return bin2int(bits);
 }
-
-/*
-void ignore(std::queue<bool>& source, int n) {
-    for (int i{}; i < n; ++i) {
-        source.pop();
-    }
-}
-*/
 
 bool match(std::queue<bool>& source, bool match) {
     if (source.front() != match) return false;
@@ -186,15 +149,8 @@ bool parse(std::queue<bool>& source, std::vector<Packet*>& code) {
         code.push_back(op);
         return false;
     }
-        /*
-    default: {
-        std::cout << "no operation with such id\n";
-        throw -1;
-    }
-        */
     }
 
-    std::cout << source.size() << '\n';
     return false;
 }
 
@@ -254,11 +210,7 @@ long long solve(std::istream& input) {
 
     std::vector<Packet*> code;
     while (parse(source, code)); // no body
-
-    for (auto packet : code) {
-        packet->print();
-    }
-    
+   
     long long result{};
     for (auto packet : code) {
         result += compile(packet);

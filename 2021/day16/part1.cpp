@@ -51,7 +51,6 @@ public:
     int typeID_;
 
     virtual ~Packet() = default;
-    virtual void print() = 0;
     
 protected:
     Packet(int v, int t) : version_{v}, typeID_{t} {}
@@ -64,10 +63,6 @@ public:
     Literal(int v, int t) : Packet(v, t) {}
     Literal(int v, int t, int val) : Packet(v, t), value_{val} {}
     ~Literal() = default;
-
-    void print() {
-        std::cout << version_ << ' ' << typeID_ << ' ' << value_;
-    }
 };
 
 class Operator : public Packet {
@@ -78,10 +73,6 @@ public:
     Operator(int v, int t) : Packet(v, t) {}
     Operator(int v, int t, int lt, int lf)
         : Packet(v, t), lengthTypeID_{lt}, lengthField_{lf} {}
-
-    void print() {
-        std::cout << version_ << ' ' << typeID_ << ' ' << lengthTypeID_ << ' ' << lengthField_;
-    }
 };
 
 constexpr int packetInfoLength = 3;
@@ -97,14 +88,6 @@ int getBits(std::queue<bool>& source, int length) {
     }
     return bin2int(bits);
 }
-
-/*
-void ignore(std::queue<bool>& source, int n) {
-    for (int i{}; i < n; ++i) {
-        source.pop();
-    }
-}
-*/
 
 bool match(std::queue<bool>& source, bool match) {
     if (source.front() != match) return false;
@@ -150,12 +133,6 @@ void parse(std::queue<bool>& source, std::vector<Packet*>& code) {
             code.push_back(op);
             break;
         }
-            /*
-        default: {
-            std::cout << "no operation with such id\n";
-            throw -1;
-        }
-            */
         }
     }
 }

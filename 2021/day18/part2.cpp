@@ -31,24 +31,6 @@ struct Pair {
         if (rightType == pairValue_t) delete right.pair;
     }
     
-    friend void print(Pair* p) {
-        std::cout << '[';
-        if (p->leftType == numberValue_t) {
-            std::cout << p->left.num;
-        } else {
-            print(p->left.pair);
-        }
-        
-        std::cout << ',';
-        if (p->rightType == numberValue_t) {
-            std::cout << p->right.num;
-        } else {
-            print(p->right.pair);
-        }
-        
-        std::cout << ']';
-    }
-
     void insertNum(bool isLeft, int num) {
         if (isLeft) {
             this->leftType = numberValue_t;
