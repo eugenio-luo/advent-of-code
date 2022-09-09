@@ -17,7 +17,6 @@ int solve(std::istream& input) {
         case 'd': depth += value; break;
         case 'u': depth -= value; break;
         }
-
     }
 
     return depth * position;
