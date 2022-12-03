@@ -2,7 +2,8 @@
 #include <fstream>
 #include <cstring>
 
-int solve(std::istream& input)
+int
+solve(std::istream& input)
 {
         int points = 0;
 
@@ -23,7 +24,8 @@ int solve(std::istream& input)
         return points;
 }
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
         if (argc < 2) {
                 std::cout << "[ERROR] missing argument, should be [input]\n";

@@ -3,7 +3,8 @@
 #include <string>
 #include <cstring>
 
-int solve(std::istream& input)
+int
+solve(std::istream& input)
 {
         int max = 0;
         int value;
@@ -27,7 +28,8 @@ int solve(std::istream& input)
         return max;
 }
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
         if (argc < 2) {
                 std::cout << "[ERROR] missing argument, should be [input]\n";
