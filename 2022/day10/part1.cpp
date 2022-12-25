@@ -45,41 +45,6 @@ solve(std::fstream& input)
         return total;
 }
 
-/*
-long long
-solve(std::fstream& input)
-{
-        long long total = 0; 
-        long long reg = 1;
-        long long cycle = 1;
-        long long store = 0;
-        
-        std::string line;
-        while (std::getline(input, line)) {
-                char instruction = line[0];
-
-                reg += store;
-                std::cout << cycle << ' ' << reg << '\n';
-                store = 0;
-                switch (instruction) {
-                case 'a':
-                        store += add(line);
-                        break;
-                case 'n':
-                        break;
-                }
-
-                if ((cycle - 20) % 40 == 0) {
-                        std::cout << cycle << ": " << reg << '\n';
-                        total += reg * cycle;
-                }
-                ++cycle;
-        }
-
-        return total;
-}
-*/
-
 int
 main(int argc, char *argv[])
 {
